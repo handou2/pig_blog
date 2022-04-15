@@ -2,12 +2,15 @@ export type IUserInfo = {
   userId?: number | null,
   nickname?: string,
   avatar?: string,
+  id?: number,
 };
+
 export interface IUserStore {
   userInfo: IUserInfo;
   // eslint-disable-next-line no-unused-vars
   setUserInfo: (value: IUserInfo) => void;
 }
+
 const userStore = (): IUserStore => {
   return {
     userInfo: {},
@@ -16,4 +19,5 @@ const userStore = (): IUserStore => {
     },
   };
 };
+
 export default userStore;
