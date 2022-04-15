@@ -1,0 +1,13 @@
+@import "antd/dist/antd.css";
+
+body {
+  background-color: aliceblue;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.content-layout {
+  width: 1080px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+}
