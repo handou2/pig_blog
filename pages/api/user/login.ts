@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { Cookie } from "next-cookie";
 import { ironOptions } from "config/index";
+//ISession保存数据在内存中
 import { ISession } from "pages/api/index";
 import { setCookie } from "utils/index";
 import { prepareConnection } from "db/index";
@@ -14,6 +15,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
   const cookies = Cookie.fromApiRoute(req, res);
   const { phone = "", verify = "", identity_type = "phone" } = req.body;
   const db = await prepareConnection();
+  //数据库操作
   const userAuthRepo = db.getRepository(UserAuth);
 
   if (String(session.verifyCode) === String(verify)) {
@@ -32,7 +34,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       // 已存在的用户
       const user = userAuth.user;
       const { id, nickname, avatar } = user;
-
+      //如果session里面可以拿到校验信息说明是登录态
       session.userId = id;
       session.nickname = nickname;
       session.avatar = avatar;
@@ -54,7 +56,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       // 新用户，自动注册
       const user = new User();
       user.nickname = `用户_${Math.floor(Math.random() * 10000)}`;
-      user.avatar = "/images/avatar.jpg";
+      user.avatar = "/public/avatar.jpg";
       user.job = "暂无";
       user.introduce = "暂无";
 

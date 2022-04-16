@@ -1,3 +1,4 @@
+//typeorm入口文件
 import "reflect-metadata";
 import { Connection, getConnection, createConnection } from "typeorm";
 import { User, UserAuth } from "./entity/index";
