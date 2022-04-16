@@ -4,6 +4,7 @@ import { message } from "antd";
 import CountDown from "components/CountDown";
 import request from "service/fetch";
 import { useStore } from "store/index";
+import { observer } from "mobx-react-lite";
 interface IProps {
   isShow: boolean;
   onClose: Function;
@@ -57,6 +58,7 @@ const Login = (props: IProps) => {
         }
       });
   };
+  //三方登录
   const handleOAuthGithub = () => {};
   const handleCountDownEnd = () => {
     setIsShowVerifyCode(false);
@@ -120,4 +122,4 @@ const Login = (props: IProps) => {
     </div>
   ) : null;
 };
-export default Login;
+export default observer(Login);
