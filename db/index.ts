@@ -28,7 +28,7 @@ export const prepareConnection = () => {
         username,
         password,
         database,
-        entities: [User, UserAuth, Comment],
+        entities: [User, UserAuth],
         synchronize: false,
         logging: true,
       });

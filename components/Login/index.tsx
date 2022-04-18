@@ -1,40 +1,41 @@
-import styles from "./index.module.scss";
 import { ChangeEvent, useState } from "react";
 import { message } from "antd";
-import CountDown from "components/CountDown";
+import { observer } from "mobx-react-lite";
 import request from "service/fetch";
 import { useStore } from "store/index";
-import { observer } from "mobx-react-lite";
+import CountDown from "components/CountDown";
+import styles from "./index.module.scss";
+
 interface IProps {
   isShow: boolean;
   onClose: Function;
 }
+
 const Login = (props: IProps) => {
   const store = useStore();
-  console.log(props);
-  const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
   const { isShow = false, onClose } = props;
+  const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
   const [form, setForm] = useState({
     phone: "",
     verify: "",
   });
-  console.log(setForm);
+
   const handleClose = () => {
     onClose && onClose();
   };
+
   const handleGetVerifyCode = () => {
-    // setIsShowVerifyCode(true);
     if (!form?.phone) {
       message.warning("请输入手机号");
       return;
     }
+
     request
       .post("/api/user/sendVerifyCode", {
         to: form?.phone,
         templateId: 1,
       })
       .then((res: any) => {
-        console.log(res);
         if (res?.code === 0) {
           setIsShowVerifyCode(true);
         } else {
@@ -42,6 +43,7 @@ const Login = (props: IProps) => {
         }
       });
   };
+
   const handleLogin = () => {
     request
       .post("/api/user/login", {
@@ -50,7 +52,7 @@ const Login = (props: IProps) => {
       })
       .then((res: any) => {
         if (res?.code === 0) {
-          //登陆成功
+          // 登录成功
           store.user.setUserInfo(res?.data);
           onClose && onClose();
         } else {
@@ -58,11 +60,17 @@ const Login = (props: IProps) => {
         }
       });
   };
-  //三方登录
-  const handleOAuthGithub = () => {};
-  const handleCountDownEnd = () => {
-    setIsShowVerifyCode(false);
+
+  // client-id：d26b6141d5ccf60f7ea8
+  // client-secret：4003799d14048c0b971eaf1813b3b6ec65f4178e
+  const handleOAuthGithub = () => {
+    const githubClientid = "d26b6141d5ccf60f7ea8";
+    const redirectUri = "http://localhost:3000/api/oauth/redirect";
+    window.open(
+      `https://github.com/login/oauth/authorize?client_id=${githubClientid}&redirect_uri=${redirectUri}`
+    );
   };
+
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({
@@ -70,6 +78,11 @@ const Login = (props: IProps) => {
       [name]: value,
     });
   };
+
+  const handleCountDownEnd = () => {
+    setIsShowVerifyCode(false);
+  };
+
   return isShow ? (
     <div className={styles.loginArea}>
       <div className={styles.loginBox}>
@@ -122,4 +135,5 @@ const Login = (props: IProps) => {
     </div>
   ) : null;
 };
+
 export default observer(Login);
