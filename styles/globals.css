@@ -10,4 +10,11 @@ body {
   margin: 0 auto;
   background-color: #fff;
   padding: 20px;
+
+  /* position: absolute;
+  left: 3%;
+  right: 0;
+  top: 60px;
+  bottom: 100px;
+  overflow-y: scroll; */
 }

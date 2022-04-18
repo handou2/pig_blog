@@ -18,18 +18,19 @@ const NewEditor = () => {
   const handlePublish = () => {
     if(!title){
       message.warning('请输入文章标题')
+    }else{
+      request.post('/api/article/publish',{
+        title,
+        content
+      }).then((res:any)=>{
+        if(res?.code === 0){
+          userId ? push('/user/${userId}'):push('/')
+          message.success('发布成功')
+        }else{
+          message.error(res?.msg || '发布失败')
+        }
+      })
     }
-    request.post('/api/article/publish',{
-      title,
-      content
-    }).then((res:any)=>{
-      if(res?.code === 0){
-        userId ? push('/user/${userId}'):push('/')
-        message.success('发布成功')
-      }else{
-        message.error(res?.msg || '发布失败')
-      }
-    })
   };
   const handleContentChange = (content:any) => {
     setContent(content)

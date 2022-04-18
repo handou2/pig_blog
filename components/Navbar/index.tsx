@@ -13,7 +13,8 @@ import { navs } from "./config";
 
 const Navbar: NextPage = () => {
   const store = useStore();
-  const { userId, avatar } = store.user.userInfo;
+  // const { userId, avatar } = store.user.userInfo;
+  const { userId } = store.user.userInfo;
   const { pathname, push } = useRouter();
   const [isShowLogin, setIsShowLogin] = useState(false);
 
@@ -62,7 +63,7 @@ const Navbar: NextPage = () => {
 
   return (
     <div className={styles.navbar}>
-      <section className={styles.logoArea}>BLOG-C</section>
+      <section className={styles.logoArea}>BLOG-PIG</section>
       <section className={styles.linkArea}>
         {navs?.map((nav) => (
           <Link key={nav?.label} href={nav?.value}>
@@ -78,7 +79,13 @@ const Navbar: NextPage = () => {
         {userId ? (
           <>
             <Dropdown overlay={renderDropDownMenu()} placement="bottomLeft">
-              <Avatar src={avatar} size={32} />
+              {/* <Avatar src={avatar} size={32} /> */}
+              <Avatar
+                src={
+                  "http://wenzhuhao.oss-cn-beijing.aliyuncs.com/2022-04/18/6346php5E17.tmp1650273810220418.jpg"
+                }
+                size={32}
+              />
             </Dropdown>
           </>
         ) : (

@@ -12,8 +12,8 @@ import { EXCEPTION_ARTICLE } from "pages/api/config/codes";
 export default withIronSessionApiRoute(publish, ironOptions);
 
 async function publish(req: NextApiRequest, res: NextApiResponse) {
-  console.log(3333333);
-  console.log(res);
+  // console.log(3333333);
+  // console.log(res);
   const session: ISession = req.session;
   const { title = "", content = "" } = req.body;
   const db = await prepareConnection();
@@ -21,8 +21,8 @@ async function publish(req: NextApiRequest, res: NextApiResponse) {
   const userRepo = db.getRepository(User);
   const articleRepo = db.getRepository(Article);
   const article = new Article();
-  console.log(1111111);
-  console.log(articleRepo);
+  // console.log(1111111);
+  // console.log(articleRepo);
   const user = await userRepo.findOne({
     id: session.userId,
   });
@@ -33,8 +33,8 @@ async function publish(req: NextApiRequest, res: NextApiResponse) {
   article.update_time = new Date();
   article.is_delete = 0;
   article.views = 0;
-  console.log(22222222);
-  console.log(user);
+  // console.log(22222222);
+  // console.log(user);
   if (user) {
     article.user = user;
   }
