@@ -13,7 +13,7 @@ export class Article extends BaseEntity {
 
   @Column()
   //有多少人看过文章
-  views!: null;
+  views!: number;
 
   @Column()
   create_time!: Date;

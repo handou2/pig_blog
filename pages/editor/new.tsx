@@ -5,9 +5,14 @@ import { ChangeEvent, useState } from "react";
 import styles from "./index.module.scss";
 import { Input, Button,message } from "antd";
 import request from 'service/fetch'
-
+import { useRouter } from 'next/router';
+import { useStore } from 'store/index';
+import { observer } from 'mobx-react-lite';
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 const NewEditor = () => {
+  const store = useStore();
+  const {push} = useRouter();
+  const { userId } = store.user.userInfo;
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const handlePublish = () => {
@@ -19,6 +24,7 @@ const NewEditor = () => {
       content
     }).then((res:any)=>{
       if(res?.code === 0){
+        userId ? push('/user/${userId}'):push('/')
         message.success('发布成功')
       }else{
         message.error(res?.msg || '发布失败')
@@ -54,4 +60,5 @@ const NewEditor = () => {
 };
 (NewEditor as any).layout = null;
 
-export default NewEditor;
+
+export default observer(NewEditor);
