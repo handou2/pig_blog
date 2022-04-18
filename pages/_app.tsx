@@ -8,16 +8,26 @@ interface IProps {
   pageProps: any;
 }
 function MyApp({ Component, pageProps, initialValue }: IProps) {
-  return (
-    <StoreProvider initialValue={initialValue}>
-      <Layout>
+  const renderLayout =()=>{
+    if((Component as any).layout === null){
+      return <Component {...pageProps} />
+    }else{
+      return (
+        <Layout>
         <Component {...pageProps} />
       </Layout>
+      )
+    }
+
+  }
+  return (
+    <StoreProvider initialValue={initialValue}>
+     {renderLayout()}
     </StoreProvider>
   );
 }
 MyApp.getInitialProps = async ({ ctx }: { ctx: any }) => {
-  const { userId, nickname, avatar } = ctx?.req.cookies || {};
+  const { userId, nickname, avatar } = ctx?.req?.cookies || {};
   // console.log(ctx?.req.cookies);
   return {
     initialValue: {

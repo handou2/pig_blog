@@ -1,0 +1,12 @@
+.container{
+  margin: 0 auto;
+  .operation{
+    display: flex;
+    .title{
+      width: 95%;
+    }
+    .button{
+      width: 5%;
+    }
+  }
+}
