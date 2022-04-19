@@ -9,7 +9,8 @@ import Link from "next/link";
 import { IArticle } from "pages/api/index";
 import { format } from "date-fns";
 import { useStore } from "store/index";
-import { Avatar, Button, Input, Divider } from "antd";
+import { Avatar,  Divider,Input, Button,message  } from "antd";
+import request from 'service/fetch'
 interface IProps {
   article: IArticle;
 }
@@ -22,7 +23,7 @@ export async function getServerSideProps({ params }: any) {
     where: {
       id: articleId,
     },
-    relations: ["user"],
+    relations: ["user","comments","comments.user"],
   });
   if (article) {
     article.views = article?.views + 1;
@@ -42,12 +43,42 @@ const ArticleDetail = (props: IProps) => {
   //   user: { nickname, avatar, id },
   // } = article;
   const {
-    user: { nickname, id },
+    user: { nickname, id }
   } = article;
   const [inputVal, setInputVal] = useState("");
   const [comments, setComments] = useState(article?.comments || []);
   const handleComment = () => {
-    setComments;
+    if(inputVal){
+      request.post('/api/comment/publish',{
+        article:article?.id,
+        content:inputVal
+      }).then((res:any)=>{
+        if(res?.code === 0){
+          message.success('评论成功')
+          const newComments =[
+            {
+              id:Math.random(),
+              create_time: new Date(),
+              update_time: new Date(),
+              content: inputVal,
+              user: {
+                avatar: loginUserInfo?.avatar,
+                nickname: loginUserInfo?.nickname,
+              },
+            }
+          ].concat([...(comments as any)]);
+          setComments(newComments)
+          setInputVal('');
+  // console.log(article)
+
+        }else{
+          message.error('评论失败');
+        }
+      })
+    }else{
+      message.warning('请输入评论内容');
+    }
+
   };
   return (
     <div>

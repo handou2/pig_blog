@@ -9,6 +9,13 @@ export const EXCEPTION_USER = {
   },
 };
 
+export const EXCEPTION_COMMENT = {
+  COMMENT_FAILED: {
+    code: 4001,
+    msg: "评论失败",
+  },
+};
+
 export const EXCEPTION_ARTICLE = {
   PUBLISH_FAILED: {
     code: 2001,
