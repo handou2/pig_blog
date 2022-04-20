@@ -5,6 +5,8 @@ import request from "service/fetch";
 import { useStore } from "store/index";
 import CountDown from "components/CountDown";
 import styles from "./index.module.scss";
+import React from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 interface IProps {
   isShow: boolean;
@@ -26,7 +28,16 @@ const Login = (props: IProps) => {
 
   const handleGetVerifyCode = () => {
     if (!form?.phone) {
-      message.warning("请输入手机号");
+      toast.warn("🦄 请输入手机号!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      // message.warning("请输入手机号");
       return;
     }
 
@@ -85,6 +96,17 @@ const Login = (props: IProps) => {
 
   return isShow ? (
     <div className={styles.loginArea}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className={styles.loginBox}>
         <div className={styles.loginTitle}>
           <div>手机号登录</div>

@@ -3,6 +3,7 @@ import "styles/globals.css";
 import { StoreProvider } from "store/index";
 import { NextPage } from "next";
 import styles from "./index.module.scss";
+
 // import ParticlesBg from 'particles-bg'
 
 interface IProps {

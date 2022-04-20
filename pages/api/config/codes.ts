@@ -1,5 +1,5 @@
 export const EXCEPTION_USER = {
-  Not_LOGIN: {
+  NOT_LOGIN: {
     code: 1001,
     msg: "未登录",
   },
@@ -13,6 +13,13 @@ export const EXCEPTION_COMMENT = {
   COMMENT_FAILED: {
     code: 4001,
     msg: "评论失败",
+  },
+};
+
+export const EXCEPTION_TAG = {
+  FOLLOW_FAILED: {
+    code: 3001,
+    msg: "关注/取关操作失败",
   },
 };
 
