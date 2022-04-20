@@ -3,7 +3,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { Input, Button,message} from "antd";
+import { Input, Button,message,Select} from "antd";
 import request from 'service/fetch'
 import { useRouter } from 'next/router';
 import { useStore } from 'store/index';
@@ -19,11 +19,14 @@ const NewEditor = () => {
   const { userId } = store.user.userInfo;
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
-  // const [allTags, setAllTags] = useState([]);
+  const [tagIds, setTagIds] = useState([]);
+  const [allTags, setAllTags] = useState([]);
   useEffect(()=>{
     request.get('/api/tag/get').then((res:any)=>{
       if(res?.code === 0){
-        // setAllTags(res?.data?.allTags || [])
+        // console.log("tttttt")
+        // console.log(res)
+        setAllTags(res?.data?.allTags || [])
       }
     })
   },[])
@@ -42,7 +45,8 @@ const NewEditor = () => {
     }else{
       request.post('/api/article/publish',{
         title,
-        content
+        content,
+        tagIds
       }).then((res:any)=>{
         if(res?.code === 0){
           toast.success('🦄 发布成功! 正在跳转页面', {
@@ -55,8 +59,8 @@ const NewEditor = () => {
             progress: undefined,
             });
           setTimeout(() => {
-              userId ? push('/user/${userId}'):push('/')
-          }, 5000);
+              userId ? push(`/user/${userId}`):push('/')
+          }, 2000);
           
           // message.success('发布成功')
         }else{
@@ -67,6 +71,9 @@ const NewEditor = () => {
   };
   const handleContentChange = (content:any) => {
     setContent(content)
+  };
+  const handleSelectTag = (value:[]) => {
+    setTagIds(value)
   };
   const handleTitleChange = (event:ChangeEvent<HTMLInputElement>) => {
     setTitle(event?.target?.value);
@@ -93,6 +100,19 @@ const NewEditor = () => {
           value={title}
           onChange={handleTitleChange}
         ></Input>
+        <Select 
+          className={styles.tag} 
+          mode="multiple"
+          allowClear 
+          placeholder="请选择标签"
+          onChange={handleSelectTag}
+        >
+          {allTags?.map((tag:any)=>(
+            <Select.Option key={tag?.id} value={tag?.id}>
+              {tag?.title}
+            </Select.Option>
+          ))}
+        </Select>
         <Button
           className={styles.button}
           type="primary"
