@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button } from "antd";
 import request from "service/fetch";
 import styles from "./index.module.scss";
+import { NotifyError, NotifySuccess } from "components/Notify";
 
 const layout = {
   labelCol: { span: 4 },
@@ -28,9 +29,9 @@ const UserProfile = () => {
   const handleSubmit = (values: any) => {
     request.post("/api/user/update", { ...values }).then((res: any) => {
       if (res?.code === 0) {
-        message.success("修改成功");
+        NotifySuccess("修改成功");
       } else {
-        message.error(res?.msg || "修改失败");
+        NotifyError(res?.msg || "修改失败");
       }
     });
   };

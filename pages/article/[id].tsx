@@ -9,8 +9,10 @@ import Link from "next/link";
 import { IArticle } from "pages/api/index";
 import { format } from "date-fns";
 import { useStore } from "store/index";
-import { Avatar,  Divider,Input, Button,message  } from "antd";
+import { Avatar,  Divider,Input, Button  } from "antd";
 import request from 'service/fetch'
+import { NotifyError, NotifySuccess,NotifyWarn } from "components/Notify";
+
 interface IProps {
   article: IArticle;
 }
@@ -54,7 +56,7 @@ const ArticleDetail = (props: IProps) => {
         content:inputVal
       }).then((res:any)=>{
         if(res?.code === 0){
-          message.success('评论成功')
+          NotifySuccess('评论成功')
           const newComments =[
             {
               id:Math.random(),
@@ -72,11 +74,11 @@ const ArticleDetail = (props: IProps) => {
   // console.log(article)
 
         }else{
-          message.error('评论失败');
+          NotifyError('评论失败');
         }
       })
     }else{
-      message.warning('请输入评论内容');
+      NotifyWarn('请输入评论内容');
     }
 
   };

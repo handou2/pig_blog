@@ -3,13 +3,15 @@ import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
 import { observer } from 'mobx-react-lite';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { Input, Button, message, Select } from 'antd';
+import { Input, Button,  Select } from 'antd';
 import { useRouter } from 'next/router';
 import { prepareConnection } from 'db/index';
 import { Article } from 'db/entity';
 import request from 'service/fetch';
 import styles from './index.module.scss';
 import { IArticle } from 'pages/api';
+import { NotifyError, NotifySuccess,NotifyWarn } from "components/Notify";
+
 
 interface IProps {
   article: IArticle
@@ -54,7 +56,7 @@ const ModifyEditor = ({ article }: IProps) => {
 
   const handlePublish = () => {
     if (!title) {
-      message.warning('请输入文章标题');
+      NotifyWarn('请输入文章标题');
       return ;
     }
     request.post('/api/article/update', {
@@ -65,9 +67,9 @@ const ModifyEditor = ({ article }: IProps) => {
     }).then((res: any) => {
       if (res?.code === 0) {
         articleId ? push(`/article/${articleId}`) : push('/');
-        message.success('更新成功');
+        NotifySuccess('更新成功');
       } else {
-        message.error(res?.msg || '发布失败');
+        NotifyError(res?.msg || '发布失败');
       }
     })
   };

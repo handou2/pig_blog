@@ -3,13 +3,14 @@ import { observer } from "mobx-react-lite";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button, Avatar, Dropdown, Menu, message } from "antd";
+import { Button, Avatar, Dropdown, Menu } from "antd";
 import { LoginOutlined, HomeOutlined } from "@ant-design/icons";
 import request from "service/fetch";
 import { useStore } from "store/index";
 import Login from "components/Login";
 import styles from "./index.module.scss";
 import { navs } from "./config";
+import { NotifyWarn } from "components/Notify";
 
 const Navbar: NextPage = () => {
   const store = useStore();
@@ -22,7 +23,8 @@ const Navbar: NextPage = () => {
     if (userId) {
       push("/editor/new");
     } else {
-      message.warning("请先登录");
+      NotifyWarn("请先登录");
+      // message.warning("请先登录");
     }
   };
 

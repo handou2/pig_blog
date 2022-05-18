@@ -3,14 +3,13 @@ import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { Input, Button,message,Select} from "antd";
+import { Input, Button,Select} from "antd";
 import request from 'service/fetch'
 import { useRouter } from 'next/router';
 import { useStore } from 'store/index';
 import { observer } from 'mobx-react-lite';
+import { NotifyError, NotifySuccess,NotifyWarn } from "components/Notify";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 const NewEditor = () => {
@@ -32,15 +31,7 @@ const NewEditor = () => {
   },[])
   const handlePublish = () => {
     if(!title){
-      toast.warn('🦄 请输入文章标题!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
+      NotifyWarn("请输入文章标题")
       // message.warning('请输入文章标题')
     }else{
       request.post('/api/article/publish',{
@@ -49,22 +40,14 @@ const NewEditor = () => {
         tagIds
       }).then((res:any)=>{
         if(res?.code === 0){
-          toast.success('🦄 发布成功! 正在跳转页面', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
+            NotifySuccess('发布成功! 正在跳转页面')
           setTimeout(() => {
               userId ? push(`/user/${userId}`):push('/')
           }, 2000);
           
           // message.success('发布成功')
         }else{
-          message.error(res?.msg || '发布失败')
+          NotifyError(res?.msg || '发布失败')
         }
       })
     }
@@ -80,19 +63,6 @@ const NewEditor = () => {
   };
   return (
     <div className={styles.container}>
-     <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        />
-      {/* Same as */}
-      <ToastContainer />
       <div className={styles.operation}>
         <Input
           className={styles.title}

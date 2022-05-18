@@ -3,8 +3,8 @@ import "styles/globals.css";
 import { StoreProvider } from "store/index";
 import { NextPage } from "next";
 import styles from "./index.module.scss";
-
-// import ParticlesBg from 'particles-bg'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IProps {
   initialValue: Record<any, any>;
@@ -14,12 +14,19 @@ interface IProps {
 function MyApp({ Component, pageProps, initialValue }: IProps) {
   const renderLayout =()=>{
     if((Component as any).layout === null){
-      return <Component {...pageProps} />
+      return (
+        <div>
+          <Component {...pageProps} />
+          <ToastContainer position="bottom-left" pauseOnHover autoClose={5000} />
+        </div>
+      )
+      
     }else{
       return (
         <Layout>
-         <Component {...pageProps} />
-      </Layout>
+          <Component {...pageProps} />
+          <ToastContainer position="bottom-left" pauseOnHover autoClose={5000} />
+        </Layout>
       )
     }
 

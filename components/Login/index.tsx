@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from "react";
-import { message } from "antd";
+// import { message } from "antd";
 import { observer } from "mobx-react-lite";
 import request from "service/fetch";
 import { useStore } from "store/index";
 import CountDown from "components/CountDown";
 import styles from "./index.module.scss";
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { NotifyError, NotifySuccess } from "components/Notify";
 
 interface IProps {
   isShow: boolean;
@@ -28,15 +28,7 @@ const Login = (props: IProps) => {
 
   const handleGetVerifyCode = () => {
     if (!form?.phone) {
-      toast.warn("🦄 请输入手机号!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      NotifyError("请输入手机号");
       // message.warning("请输入手机号");
       return;
     }
@@ -50,7 +42,8 @@ const Login = (props: IProps) => {
         if (res?.code === 0) {
           setIsShowVerifyCode(true);
         } else {
-          message.error(res?.msg || "未知错误");
+          NotifyError(res?.msg || "未知错误");
+          // message.error(res?.msg || "未知错误");
         }
       });
   };
@@ -64,10 +57,12 @@ const Login = (props: IProps) => {
       .then((res: any) => {
         if (res?.code === 0) {
           // 登录成功
+          NotifySuccess("登录成功")
           store.user.setUserInfo(res?.data);
           onClose && onClose();
         } else {
-          message.error(res?.msg || "未知错误");
+          NotifyError(res?.msg || "未知错误");
+          // message.error(res?.msg || "未知错误");
         }
       });
   };
@@ -96,17 +91,6 @@ const Login = (props: IProps) => {
 
   return isShow ? (
     <div className={styles.loginArea}>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className={styles.loginBox}>
         <div className={styles.loginTitle}>
           <div>手机号登录</div>
