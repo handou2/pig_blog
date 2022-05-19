@@ -1,4 +1,5 @@
 
+Next.js全栈项目
 
 In the project directory, you can run:
 
@@ -44,6 +45,13 @@ tsconfig.json：typescript 相关配置
 
 .eslintrc.json：eslint 相关配置  
 
+.stylelintrc.json:样式相关规则配置  
+```
+ "rules": {
+        "selector-class-pattern": "^[a-z][a-zA-Z0-9]+$"
+    }
+```
+
 pages：存放页面文件，声明式路由，文件名即路由  
 
 public：存放静态资源文件  
@@ -77,7 +85,7 @@ pages/post/[…all].js 叫作 catch-all 路由， /post/* 下的所有页面路�
 
 这里推荐一个消息弹出提示库,地址:https://github.com/fkhadra/react-toastify.  
 
-为了方便使用我们这里需要对 toastify 进行一些封装:`npm install --save react-toastify`.  
+为了方便使用,我们这里需要对 toastify 进行一些封装:`npm install --save react-toastify`.  
 
 本项目将封装成一个组件,并在 index.tsx 中引入.
 
