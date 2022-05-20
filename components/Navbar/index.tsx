@@ -14,7 +14,6 @@ import { NotifyWarn } from "components/Notify";
 
 const Navbar: NextPage = () => {
   const store = useStore();
-  // const { userId, avatar } = store.user.userInfo;
   const { userId } = store.user.userInfo;
   const { pathname, push } = useRouter();
   const [isShowLogin, setIsShowLogin] = useState(false);
@@ -69,6 +68,7 @@ const Navbar: NextPage = () => {
       <section className={styles.linkArea}>
         {navs?.map((nav) => (
           <Link key={nav?.label} href={nav?.value}>
+            {/* 判断当前路径是否为点击路径 */}
             <a className={pathname === nav?.value ? styles.active : ""}>
               {nav?.label}
             </a>

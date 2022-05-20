@@ -15,11 +15,13 @@ const CountDown = (props: IProps) => {
       setCount((count) => {
         if (count === 0) {
           clearInterval(id);
+          // onEnd存在的时候调用
           onEnd && onEnd();
           return count;
         }
         return count - 1;
       });
+      // 清除定时器
       return () => {
         clearInterval(id);
       };

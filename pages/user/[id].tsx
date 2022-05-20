@@ -51,12 +51,38 @@ export async function getStaticProps({ params }: { params: any }) {
   };
 }
 
+// export async function getServerSideProps({ params }: { params: any }) {
+//   const userId = params?.id;
+//   const db = await prepareConnection();
+//   const user = await db.getRepository(User).findOne({
+//     where: {
+//       id: Number(userId),
+//     },
+//   });
+//   const articles = await db.getRepository(Article).find({
+//     where: {
+//       user: {
+//         id: Number(userId),
+//       },
+//     },
+//     relations: ['user', 'tags'],
+//   });
+
+//   return {
+//     props: {
+//       userInfo: JSON.parse(JSON.stringify(user)),
+//       articles: JSON.parse(JSON.stringify(articles)),
+//     },
+//   };
+// }
+
 const UserDetail = (props: any) => {
   const { userInfo = {}, articles = [] } = props;
   const viewsCount = articles?.reduce(
     (prev: any, next: any) => prev + next?.views,
     0
   );
+  console.log(articles, "123");
 
   return (
     <div className={styles.userDetail}>
