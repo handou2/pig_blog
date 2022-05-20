@@ -13,6 +13,7 @@ interface IProps {
 const ListItem = (props: IProps) => {
   const { article } = props;
   const { user } = article;
+  // console.log(article, "11");
 
   return (
     // eslint-disable-next-line @next/next/link-passhref
@@ -27,7 +28,14 @@ const ListItem = (props: IProps) => {
               </span>
             </div>
             <h4 className={styles.title}>{article?.title}</h4>
-            <p className={styles.content}>{markdownToTxt(article?.content)}</p>
+            {article.content ? (
+              <p className={styles.content}>
+                {markdownToTxt(article?.content)}
+              </p>
+            ) : (
+              ""
+            )}
+
             <div className={styles.statistics}>
               <EyeOutlined />
               <span className={styles.item}>{article?.views}</span>

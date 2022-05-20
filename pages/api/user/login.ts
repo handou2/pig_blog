@@ -88,8 +88,8 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
         },
       });
     }
-    console.log(232423);
-    console.log(session.avatar);
+    // console.log(232423);
+    // console.log(session.avatar);
   } else {
     res?.status(200).json({ code: -1, msg: "验证码错误" });
   }
