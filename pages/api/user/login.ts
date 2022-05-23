@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { Cookie } from "next-cookie";
 import { ironOptions } from "config/index";
-//ISession保存数据在内存中
 import { ISession } from "pages/api/index";
 import { setCookie } from "utils/index";
 import { prepareConnection } from "db/index";
@@ -56,7 +55,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       // 新用户，自动注册
       const user = new User();
       user.nickname = `用户_${Math.floor(Math.random() * 10000)}`;
-      user.avatar = "/public/images/avatar.jpg";
+      user.avatar = "/out/images/avatar.jpg";
       user.job = "暂无";
       user.introduce = "暂无";
 
@@ -89,8 +88,8 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
         },
       });
     }
-    console.log(232423);
-    console.log(session.avatar);
+    // console.log(232423);
+    // console.log(session.avatar);
   } else {
     res?.status(200).json({ code: -1, msg: "验证码错误" });
   }

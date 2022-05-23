@@ -20,8 +20,8 @@ const UserProfile = () => {
     request.get("/api/user/detail").then((res: any) => {
       if (res?.code === 0) {
         //加载后端数据并展示，并且用户可以进行修改form表单的数据
-        console.log("345");
-        console.log(res);
+        // console.log("345");
+        // console.log(res);
         form.setFieldsValue(res?.data?.userInfo);
       }
     });

@@ -30,27 +30,24 @@ const NewEditor = () => {
     })
   },[])
   const handlePublish = () => {
-    if(!title){
+    if (!title) {
       NotifyWarn("请输入文章标题")
-      // message.warning('请输入文章标题')
-    }else{
-      request.post('/api/article/publish',{
-        title,
-        content,
-        tagIds
-      }).then((res:any)=>{
-        if(res?.code === 0){
-            NotifySuccess('发布成功! 正在跳转页面')
+      return ;
+    }
+    request.post('/api/article/publish', {
+      title,
+      content,
+      tagIds
+    }).then((res: any) => {
+      if (res?.code === 0) {
+        NotifySuccess('发布成功! 正在跳转页面')
           setTimeout(() => {
               userId ? push(`/user/${userId}`):push('/')
           }, 2000);
-          
-          // message.success('发布成功')
-        }else{
-          NotifyError(res?.msg || '发布失败')
-        }
-      })
-    }
+      } else {
+        NotifyError(res?.msg || '发布失败')
+      }
+    })
   };
   const handleContentChange = (content:any) => {
     setContent(content)

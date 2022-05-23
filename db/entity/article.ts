@@ -1,7 +1,8 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany,ManyToMany  } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, ManyToMany } from 'typeorm';
 import { User } from './user'
 import { Comment } from './comment'
 import { Tag } from './tag'
+
 @Entity({name: 'articles'})
 export class Article extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -14,7 +15,6 @@ export class Article extends BaseEntity {
   content!: string;
 
   @Column()
-  //有多少人看过文章
   views!: number;
 
   @Column()
@@ -26,17 +26,15 @@ export class Article extends BaseEntity {
   @Column()
   is_delete!: number;
 
-  @ManyToOne(()=>User)
+  @ManyToOne(() => User)
   @JoinColumn({name: 'user_id'})
-  user!: User
+  user!: User;
 
-  @OneToMany(()=>Comment,(comment)=>comment.article)
-  comments!: Comment[]
-
-  @ManyToMany(()=>Tag,(tag)=>tag.articles,{
-    cascade:true
+  @ManyToMany(() => Tag, (tag) => tag.articles, {
+    cascade: true
   })
-  tags!:Tag[]
- 
+  tags!: Tag[]
 
+  @OneToMany(() => Comment, (comment) => comment.article)
+  comments!: Comment[]
 }
