@@ -56,7 +56,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       // 新用户，自动注册
       const user = new User();
       user.nickname = `用户_${Math.floor(Math.random() * 10000)}`;
-      user.avatar = "/public/images/avatar.jpg";
+      user.avatar = "/out/images/avatar.jpg";
       user.job = "暂无";
       user.introduce = "暂无";
 
