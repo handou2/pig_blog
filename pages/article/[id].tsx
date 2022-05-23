@@ -41,9 +41,6 @@ const ArticleDetail = (props: IProps) => {
   const { article } = props;
   const store = useStore();
   const loginUserInfo = store?.user?.userInfo;
-  // const {
-  //   user: { nickname, avatar, id },
-  // } = article;
   const {
     user: { nickname, id }
   } = article;

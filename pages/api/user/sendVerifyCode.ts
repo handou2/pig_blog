@@ -13,6 +13,7 @@ export default withIronSessionApiRoute(sendVerifyCode, ironOptions);
 
 async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const session: ISession = req.session;
+  //拿到request的数据
   const { to = '', templateId = '1' } = req.body;
   const AppId = '8aaf070880082831018020982df7061c';
   const AccountId = '8aaf070880082831018020982cf00615';
@@ -21,6 +22,7 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const SigParameter = md5(`${AccountId}${AuthToken}${NowDate}`);
   const Authorization = encode(`${AccountId}:${NowDate}`);
   const verifyCode = Math.floor(Math.random() * (9999 - 1000)) + 1000;
+  //验证码过期时间
   const expireMinute = '5';
   const url = `https://app.cloopen.com:8883/2013-12-26/Accounts/${AccountId}/SMS/TemplateSMS?sig=${SigParameter}`;
 
@@ -39,11 +41,12 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
     }
   );
 
-  console.log(verifyCode)
-  console.log(response);
+  // console.log(verifyCode)
+  // console.log(response);
   const { statusCode, templateSMS, statusMsg } = response as any;
 
   if (statusCode === '000000') {
+    //将生成的verifyCode保存在session(内存)里面
     session.verifyCode = verifyCode;
     await session.save();
     res.status(200).json({

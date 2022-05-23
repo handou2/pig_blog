@@ -52,8 +52,8 @@ async function redirect(req: NextApiRequest, res: NextApiResponse) {
     const user = userAuth.user;
     const { id, nickname, avatar } = user;
 
-    console.log(6666666)
-    console.log(user)
+    // console.log(6666666)
+    // console.log(user)
 
     userAuth.credential = access_token;
 
@@ -84,8 +84,8 @@ async function redirect(req: NextApiRequest, res: NextApiResponse) {
     const userAuthRepo = db.getRepository(UserAuth);
     const resUserAuth = await userAuthRepo.save(userAuth);
 
-    console.log(77777)
-    console.log(resUserAuth)
+    // console.log(77777)
+    // console.log(resUserAuth)
 
     const { id, nickname, avatar } = resUserAuth?.user || {};
     session.userId = id;
