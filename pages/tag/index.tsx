@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Tabs, Button, message } from 'antd';
+import { Tabs, Button } from 'antd';
 import * as ANTD_ICONS from '@ant-design/icons';
 import { useStore } from 'store/index';
 import request from 'service/fetch';
 import styles from './index.module.scss';
+import { NotifyError, NotifySuccess } from "components/Notify";
 
 const { TabPane } = Tabs;
 
@@ -46,10 +47,10 @@ const Tag = () => {
       tagId
     }).then((res: any) => {
       if (res?.code === 0) {
-        message.success('取关成功');
+        NotifySuccess('取关成功');
         setNeedRefresh(!needRefresh);
       } else {
-        message.error(res?.msg || '取关失败');
+        NotifyError(res?.msg || '取关失败');
       }
     })
   }
@@ -60,10 +61,10 @@ const Tag = () => {
       tagId
     }).then((res: any) => {
       if (res?.code === 0) {
-        message.success('关注成功');
+        NotifySuccess('关注成功');
         setNeedRefresh(!needRefresh);
       } else {
-        message.error(res?.msg || '关注失败');
+        NotifyError(res?.msg || '关注失败');
       }
     })
   }
