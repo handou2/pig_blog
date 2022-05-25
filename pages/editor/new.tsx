@@ -43,7 +43,7 @@ const NewEditor = () => {
         NotifySuccess('发布成功! 正在跳转页面')
           setTimeout(() => {
               userId ? push(`/user/${userId}`):push('/')
-          }, 2000);
+          }, 1000);
       } else {
         NotifyError(res?.msg || '发布失败')
       }

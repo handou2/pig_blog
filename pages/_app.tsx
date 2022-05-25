@@ -3,6 +3,8 @@ import { StoreProvider } from 'store/index';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Layout from 'components/layout';
 import { NextPage } from 'next';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IProps {
   initialValue: Record<any, any>;
@@ -47,11 +49,17 @@ export function reportWebVitals(mertic: any) {
 function MyApp({ initialValue, Component, pageProps }: IProps) {
   const renderLayout = () => {
     if ((Component as any).layout === null) {
-      return <Component {...pageProps} />;
+      return (
+        <div>
+          <Component {...pageProps} />
+          <ToastContainer position="bottom-left" pauseOnHover autoClose={5000} />
+        </div>
+      )
     } else {
       return (
         <Layout>
           <Component {...pageProps} />
+          <ToastContainer position="bottom-left" pauseOnHover autoClose={5000} />
         </Layout>
       );
     }
